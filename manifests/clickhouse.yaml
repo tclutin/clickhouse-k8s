@@ -10,7 +10,7 @@ spec:
       dataVolumeClaimTemplate: data-volume-template
       logVolumeClaimTemplate: log-volume-template
 
-  # Блок с конфигурацией, но тут только настраиваем кластеризацию (один шард и одну реплику, больше нам не надо)
+  # Блок с конфигурацией, но тут только настраиваем кластеризацию (один шард и одна реплика, больше нам не надо для single-инсталляции)
   configuration:
     clusters:
       - name: clickhouse
