@@ -17,7 +17,6 @@ spec:
           shardsCount: {{ .Values.clusters.shardsCount }}
           replicasCount: {{ .Values.clusters.replicasCount }}
 
-    #для красоты отступы сделаем
     users:
       {{- range $user, $config := .Values.users }}
 
