@@ -59,6 +59,9 @@ kubectl apply -f clickhouse.yaml
 kubectl delete -f clickhouse-secret.yaml
 kubectl delete -f clickhouse.yaml
 ```
+---
+
+Изменять/добавлять пользователей и изменять версию образа можно только ручками в файлах манифеста
 
 ---
 
@@ -85,3 +88,9 @@ helm rollback my-release 1 --namespace clickhouse
 ```bash
 helm uninstall my-release --namespace clickhouse
 ```
+
+---
+
+Изменять/добавлять пользователей и изменять версию образа можно через --set image.version=22.8, либо в файле values в чарте.
+
+---
