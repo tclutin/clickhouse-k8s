@@ -56,8 +56,8 @@ kubectl apply -f clickhouse.yaml
 
 Удаление ClickHouse 
 ```bash
-kubectl delete -f clickhouse-secret.yaml
 kubectl delete -f clickhouse.yaml
+kubectl delete -f clickhouse-secret.yaml
 ```
 ---
 
