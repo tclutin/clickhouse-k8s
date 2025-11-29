@@ -71,12 +71,12 @@ kubectl delete -f clickhouse-secret.yaml
 
 Развертываем ClickHouse с помощью чарта
 ```bash
-helm upgrade --install my-release ./clickhouse-chi/ --namespace clickhouse
+helm upgrade --install my-release ./charts/clickhouse-chi/ --namespace clickhouse
 ```
 
 Изменение версии образа (можем так менять все, что есть в values)
 ```bash
-helm upgrade --install my-release ./clickhouse-chi/ --namespace clickhouse --set image.version=22.8
+helm upgrade --install my-release ./charts/clickhouse-chi/ --namespace clickhouse --set image.version=22.8
 ```
 
 Откат к определенной версии (к примеру к первой)
