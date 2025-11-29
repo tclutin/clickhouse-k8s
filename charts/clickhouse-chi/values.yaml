@@ -1,0 +1,37 @@
+image:
+  repository: clickhouse/clickhouse-server
+  version: 25.11
+
+resources:
+  requests:
+    memory: "512M"
+    cpu: "1000m"
+  limits:
+    memory: "2Gi"
+    cpu: "2000m"
+
+clusters:
+  shardsCount: 1
+  replicasCount: 1
+
+volumes:
+  storageClassName: "standard"
+  dataStorage: "2Gi"
+  logStorage: "100Mi"
+
+users:
+  admin:
+    password: "adminpass123"
+    profile: default
+    networks:
+      - "127.0.0.1/8"
+  developer:
+    password: "dev1pass123"
+    profile: default
+    networks:
+      - "0.0.0.0/0"
+  readonly:
+    password: "ReadOnlyPass"
+    profile: readonly
+    networks:
+      - "0.0.0.0/0"

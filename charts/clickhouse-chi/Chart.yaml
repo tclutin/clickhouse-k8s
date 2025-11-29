@@ -1,0 +1,6 @@
+apiVersion: v2
+name: clickhouse-chi
+description: A simple helm chart for deploying ClickHouse using the Altinity Operator.
+type: application
+version: 0.1.0
+appVersion: "1.16.0"

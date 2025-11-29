@@ -1,0 +1,85 @@
+apiVersion: clickhouse.altinity.com/v1
+kind: ClickHouseInstallation
+metadata:
+  name: single
+  namespace: clickhouse
+spec:
+  defaults:
+    templates:
+      podTemplate: clickhouse:25.11-template
+      dataVolumeClaimTemplate: data-volume-template
+      logVolumeClaimTemplate: log-volume-template
+
+  # Блок с конфигурацией, но тут только настраиваем кластеризацию (один шард и одну реплику, больше нам не надо)
+  configuration:
+    clusters:
+      - name: clickhouse
+        layout:
+          shardsCount: 1
+          replicasCount: 1
+
+    # Объявляем наших пользователей, устанавливаем профили и берём пароли из secret
+    users:
+      admin/password:
+        valueFrom:
+          secretKeyRef:
+            name: chi-user-passwords
+            key: admin_pass
+      admin/networks/ip:
+        - 0.0.0.0/0
+      admin/profile: default
+
+      developer/password:
+        valueFrom:
+          secretKeyRef:
+            name: chi-user-passwords
+            key: dev_pass
+      developer/networks/ip:
+        - 0.0.0.0/0
+      developer/profile: default
+
+      readonly/password:
+        valueFrom:
+          secretKeyRef:
+            name: chi-user-passwords
+            key: readonly_pass
+      readonly/networks/ip:
+        - 0.0.0.0/0
+      readonly/profile: readonly
+
+  # Тут описываем шаблоны для default-секции
+  templates:
+    # Шаблон для наших подов: задаём наш образ кликхауса, а так же не забываем задать request/limits
+    podTemplates:
+      - name: clickhouse:25.11-template
+        spec:
+          containers:
+            - name: clickhouse
+              image: clickhouse/clickhouse-server:25.11
+              resources:
+                requests:
+                  memory: "512M"
+                  cpu: "1000m"
+                limits:
+                  memory: "2Gi"
+                  cpu: "2000m"
+
+    # Шаблоны для volumes. Один непосредственно для самих данных, а другой для логов. Задаём лимиты и указываем storageClassName, лучше уж явно
+    volumeClaimTemplates:
+      - name: data-volume-template
+        spec:
+          storageClassName: standard
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 2Gi
+
+      - name: log-volume-template
+        spec:
+          storageClassName: standard
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 100Mi
