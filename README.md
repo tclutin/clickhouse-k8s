@@ -1,7 +1,5 @@
 # clickhouse-k8s
 
-## Описание
-
 ---
 
 Данный репозиторий содержит k8s-манифесты и Helm-чарт для развертывания ClickHouse с использованием Altinity ClickHouse Operator.
